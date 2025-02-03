@@ -57,7 +57,7 @@ All changes are safe and can be easily reversed!
 ## Support
 
 - Found a bug? Create an issue on GitHub
-- Questions? Discord: '19.94'
+- Questions? Discord: `19.94`
 
 ## License
 
