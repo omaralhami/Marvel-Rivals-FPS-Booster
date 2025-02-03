@@ -1,4 +1,5 @@
 # 🚀 Marvel Rivals FPS Booster
+![image](https://github.com/user-attachments/assets/ba06996a-a4aa-43a6-9861-de02308a08b0)
 
 A lightweight tool to boost your Marvel Rivals performance with just one click.
 
