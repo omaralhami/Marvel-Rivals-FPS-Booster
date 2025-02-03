@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Marvel Rivals FPS Booster</title>
+    <HTA:APPLICATION 
+        APPLICATIONNAME="Marvel Rivals FPS Booster"
+        BORDER="thin"
+        BORDERSTYLE="normal"
+        CAPTION="yes"
+        ICON="icon.ico"
+        MAXIMIZEBUTTON="no"
+        MINIMIZEBUTTON="yes"
+        SHOWINTASKBAR="yes"
+        SINGLEINSTANCE="yes"
+        SYSMENU="yes"
+        VERSION="1.0"
+        WINDOWSTATE="normal">
+    <style>
+        @font-face {
+            font-family: 'Segoe MDL2 Assets';
+            src: local('Segoe MDL2 Assets');
+        }
+        .icon {
+            font-family: 'Segoe MDL2 Assets';
+            font-style: normal;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #1e1e1e;
+            color: white;
+            padding: 32px;
+            user-select: none;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 340px;
+            margin: 0 auto;
+            position: relative;
+            height: 100%;
+        }
+        h2 {
+            font-size: 24px;
+            font-weight: normal;
+            color: #e4e4e4;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        .warning {
+            color: #ffd700;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: rgba(255, 215, 0, 0.1);
+            padding: 10px;
+            border-radius: 6px;
+        }
+        .button {
+            width: 100%;
+            padding: 14px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Segoe UI';
+            font-size: 15px;
+            transition: all 0.2s;
+            letter-spacing: 0.3px;
+        }
+        .apply {
+            background: #0d6efd;
+            color: white;
+            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+        }
+        .apply:hover {
+            background: #0b5ed7;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(13, 110, 253, 0.4);
+        }
+        .remove {
+            background: #2d2d2d;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .remove:hover {
+            background: #363636;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        }
+        .status {
+            font-size: 14px;
+            color: #4ade80;
+            padding: 10px;
+            background: rgba(74, 222, 128, 0.1);
+            border-radius: 6px;
+            letter-spacing: 0.3px;
+        }
+        .footer {
+            position: fixed;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 13px;
+            color: #8b949e;
+        }
+        .links {
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+        .links a {
+            color: #0d6efd;
+            text-decoration: none;
+            font-size: 13px;
+            transition: all 0.2s;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .links a:hover {
+            text-decoration: none;
+            opacity: 1;
+            transform: translateY(-1px);
+        }
+        .info {
+            color: #8b949e;
+            cursor: pointer;
+            font-size: 16px;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            transition: all 0.2s;
+            opacity: 0.9;
+        }
+        .info:hover {
+            opacity: 1;
+            transform: translateY(-1px);
+        }
+        .heart {
+            color: #ff69b4;
+            font-size: 13px;
+            margin: 0 2px;
+        }
+    </style>
+</head>
+<body onload="window.resizeTo(400, 440); updateStatus();">
+    <div class="container">
+        <h2>Marvel Rivals FPS Booster</h2>
+        <p class="warning"><span class="icon">&#xE814;</span> Make sure the game is closed</p>
+        <button class="button apply" onclick="applyBoost()">Apply Boost</button>
+        <button class="button remove" onclick="removeBoost()">Remove Boost</button>
+        <p id="status" class="status">The FPS Boost is Not Active</p>
+        <div class="footer">
+            Made with  <span class="icon heart">&#xEB52;</span>  by mar
+            <div class="links">
+                <a href="#" onclick="openLink('https://github.com/omaralhami')"><span class="icon">&#xEA16;</span>GitHub</a>
+                <a href="#" onclick="openLink('https://discord.com/users/672868164161372171')"><span class="icon"> | </span>Discord</a>
+            </div>
+        </div>
+        <span class="icon info" onclick="showInfo()">&#xE946;</span>
+    </div>
+
+    <script language="VBScript">
+        Option Explicit
+
+        Function getAppDataPath()
+            Dim shell
+            Set shell = CreateObject("WScript.Shell")
+            getAppDataPath = shell.ExpandEnvironmentStrings("%LOCALAPPDATA%")
+            Set shell = Nothing
+        End Function
+
+        Function getCurrentDir()
+            Dim fso
+            Set fso = CreateObject("Scripting.FileSystemObject")
+            getCurrentDir = fso.GetParentFolderName(document.location.href)
+            getCurrentDir = Replace(getCurrentDir, "file:///", "")
+            Set fso = Nothing
+        End Function
+
+        Sub openLink(url)
+            Dim shell
+            Set shell = CreateObject("WScript.Shell")
+            shell.Run url
+            Set shell = Nothing
+        End Sub
+
+        Function createScalabilityFile(filePath)
+            Dim fso, file, content
+            
+            content = ";By VIPMACTEP | 2.1 Main" & vbCrLf & _
+                     "[ScalabilitySettings]" & vbCrLf & vbCrLf & _
+                     "[GlobalIlluminationQuality@0]" & vbCrLf & _
+                     "r.LightCullingDistance=1" & vbCrLf & _
+                     "r.LightFadeDistance=750" & vbCrLf & vbCrLf & _
+                     "[ViewDistanceQuality@0]" & vbCrLf & _
+                     "p.chaos.ChoseGCLOD=2" & vbCrLf & _
+                     "r.SkeletalMeshLODBias=2" & vbCrLf & _
+                     "r.StaticMeshLODBias=2" & vbCrLf & _
+                     "r.StaticMeshLODDistanceScale=2" & vbCrLf & _
+                     "r.ViewDistanceScale=0.2" & vbCrLf & vbCrLf & _
+                     "[PostProcessQuality@0]" & vbCrLf & _
+                     "r.BloomQuality=0" & vbCrLf & _
+                     "r.DepthOfFieldQuality=0" & vbCrLf & _
+                     "r.EyeAdaptationQuality=0" & vbCrLf & _
+                     "r.PostProcessing.CalculateBlendDistanceByCollision=0" & vbCrLf & _
+                     "r.Tonemapper.Quality=0" & vbCrLf & vbCrLf & _
+                     "[ShadowQuality@0]" & vbCrLf & _
+                     "r.ActiveProjectPackageManager=0" & vbCrLf & _
+                     "r.ContactShadows=0" & vbCrLf & _
+                     "r.DistanceFieldShadowing=0" & vbCrLf & _
+                     "r.LightMaxDrawDistanceScale=0.01" & vbCrLf & _
+                     "r.ShadowQuality=0" & vbCrLf & _
+                     "r.VolumetricFog=0" & vbCrLf & vbCrLf & _
+                     "[TextureQuality@0]" & vbCrLf & _
+                     "r.Streaming.IPV=1" & vbCrLf & _
+                     "r.Streaming.MipBias=2" & vbCrLf & vbCrLf & _
+                     "[EffectsQuality@0]" & vbCrLf & _
+                     "ChaosGC.Niagara.MaxPerFrameBreakEventNum=50" & vbCrLf & _
+                     "fx.Niagara.ParticlesBudgetMax=600" & vbCrLf & _
+                     "fx.Niagara.ParticlesBudgetMin=600" & vbCrLf & _
+                     "p.Chaos.ClientGCCollapseNum=0" & vbCrLf & _
+                     "p.Chaos.ClientGCMaxRenderNum=0" & vbCrLf & _
+                     "p.debug.UseMidNoneCollision=0" & vbCrLf & _
+                     "p.debug.UseSmallNoneCollision=0" & vbCrLf & _
+                     "PM.CaptiveMode=0" & vbCrLf & _
+                     "r.EmitterSpawnRateScale=0.1" & vbCrLf & _
+                     "r.SkyAtmosphere.AerialPerspectiveLUT.DepthResolution=1.0" & vbCrLf & _
+                     "r.SkyAtmosphere.FastSkyLUT.SampleCountMax=1.0" & vbCrLf & _
+                     "r.SkyAtmosphere.FastSkyLUT.SampleCountMin=1.0" & vbCrLf & _
+                     "r.SkyAtmosphere.MultiScatteringLUT.SampleCount=1.0" & vbCrLf & _
+                     "r.SkyAtmosphere.SampleCountMax=1.0" & vbCrLf & _
+                     "r.SkyAtmosphere.SampleCountMin=1.0" & vbCrLf & _
+                     "r.SkyAtmosphere.TransmittanceLUT.SampleCount=1.0" & vbCrLf & _
+                     "r.TranslucentLightingVolume=0" & vbCrLf & vbCrLf & _
+                     "[ShadingQuality@0]" & vbCrLf & _
+                     "r.HairStrands.CamByVTPipe=0" & vbCrLf & _
+                     "r.HairStrands.SkyLighting.IntegrationType=0" & vbCrLf & _
+                     "r.HairStrands.Visibility.MSAA.SamplePerPixel=0" & vbCrLf & _
+                     ";By VIPMACTEP | 2.1 Main"
+
+            Set fso = CreateObject("Scripting.FileSystemObject")
+            Set file = fso.CreateTextFile(filePath, True)
+            file.Write content
+            file.Close
+            
+            Set file = Nothing
+            Set fso = Nothing
+        End Function
+
+        Sub applyBoost()
+            On Error Resume Next
+            Dim fso, shell, appDataPath, targetDir, targetFile
+            
+            Set fso = CreateObject("Scripting.FileSystemObject")
+            Set shell = CreateObject("WScript.Shell")
+            
+            appDataPath = getAppDataPath()
+            targetDir = appDataPath & "\Marvel\Saved\Config\Windows"
+            targetFile = targetDir & "\Scalability.ini"
+            
+            ' Create directory if it doesn't exist
+            If Not fso.FolderExists(targetDir) Then
+                fso.CreateFolder targetDir
+            End If
+            
+            ' Create Scalability.ini directly in the target directory
+            Call createScalabilityFile(targetFile)
+            
+            If Err.Number = 0 Then
+                Call updateStatus
+                MsgBox "FPS Boost Applied Successfully!" & vbCrLf & vbCrLf & _
+                       "What's Next?" & vbCrLf & _
+                       "- Launch Marvel Rivals" & vbCrLf & _
+                       "- Enjoy improved performance" & vbCrLf & vbCrLf & _
+                       "Note: You may need to restart the game if it's already running.", vbInformation, "Success"
+            Else
+                MsgBox "Error: " & Err.Description, vbCritical, "Error"
+            End If
+            
+            Set fso = Nothing
+            Set shell = Nothing
+        End Sub
+
+        Sub removeBoost()
+            On Error Resume Next
+            Dim fso, appDataPath, targetFile
+            
+            Set fso = CreateObject("Scripting.FileSystemObject")
+            appDataPath = getAppDataPath()
+            targetFile = appDataPath & "\Marvel\Saved\Config\Windows\Scalability.ini"
+            
+            If fso.FileExists(targetFile) Then
+                fso.DeleteFile targetFile, True
+                If Err.Number = 0 Then
+                    Call updateStatus
+                    MsgBox "FPS Boost Removed Successfully!" & vbCrLf & vbCrLf & _
+                           "What's Changed?" & vbCrLf & _
+                           "- Game settings restored to default" & vbCrLf & _
+                           "- Original performance settings applied" & vbCrLf & vbCrLf & _
+                           "Note: Changes will take effect after restarting the game.", vbInformation, "Success"
+                Else
+                    MsgBox "Error: " & Err.Description, vbCritical, "Error"
+                End If
+            End If
+            
+            Set fso = Nothing
+        End Sub
+
+        Sub updateStatus()
+            On Error Resume Next
+            Dim fso, appDataPath, targetFile, status
+            
+            Set fso = CreateObject("Scripting.FileSystemObject")
+            appDataPath = getAppDataPath()
+            targetFile = appDataPath & "\Marvel\Saved\Config\Windows\Scalability.ini"
+            Set status = document.getElementById("status")
+            
+            If fso.FileExists(targetFile) Then
+                status.style.color = "#4ade80"
+                status.innerText = "The FPS Boost is Active"
+            Else
+                status.style.color = "#ef4444"
+                status.innerText = "The FPS Boost is Not Active"
+            End If
+            
+            Set fso = Nothing
+        End Sub
+
+        Sub showInfo()
+            Dim info
+            info = "Marvel Rivals FPS Booster" & vbCrLf & vbCrLf & _
+                   "This application helps optimize your game's FPS by:" & vbCrLf & _
+                   "- Applying optimized graphics settings" & vbCrLf & _
+                   "- Improving FPS stability" & vbCrLf & _
+                   "- Maintaining visual quality" & vbCrLf & vbCrLf & _
+                   "Required Files:" & vbCrLf & _
+                   "- MarvelRivalsFPSBooster.hta (this app)" & vbCrLf & _
+                   "- Scalability.ini (optimization settings)" & vbCrLf & vbCrLf & _
+                   "All changes are safe and reversible." & vbCrLf & vbCrLf & _
+                   "Instructions:" & vbCrLf & _
+                   "1. Close Marvel Rivals game" & vbCrLf & _
+                   "2. Click 'Apply Boost' to optimize settings" & vbCrLf & _
+                   "3. Click 'Remove Boost' to restore defaults" & vbCrLf & vbCrLf & _
+                   "For support:" & vbCrLf & _
+                   "GitHub: github.com/omaralhami"
+            
+            MsgBox info, vbInformation, "About"
+        End Sub
+    </script>
+</body>
+</html>
