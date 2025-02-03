@@ -18,6 +18,7 @@ A lightweight tool to boost your Marvel Rivals performance with just one click.
 - Built into Windows
 - Automatic configuration
 - No antivirus warnings
+- `Note: You may see a "Publisher could not be verified" warning - this is normal, just click Run`
 - 📥 [Download Latest Version](https://github.com/omaralhami/Marvel-Rivals-FPS-Booster/releases/latest)
 
 ### 2. Legacy EXE Version
