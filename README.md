@@ -3,10 +3,10 @@ A lightweight tool to boost your Marvel Rivals performance with just one click.
 
 ## Before 
 ![image](https://github.com/user-attachments/assets/ba06996a-a4aa-43a6-9861-de02308a08b0)
+![image](https://github.com/user-attachments/assets/d27edad4-74d6-40ec-bc4a-b6ede611746b)
 
 ## After 
 
-![image](https://github.com/user-attachments/assets/d27edad4-74d6-40ec-bc4a-b6ede611746b)
 
 ## Features
 
