@@ -56,7 +56,7 @@ All changes are safe and can be easily reversed!
 
 ## Support
 
-- Found a bug? Create an issue on GitHub
+- Found a bug? Create an issue (here)[https://github.com/omaralhami/Marvel-Rivals-FPS-Booster/issues]
 - Questions? Discord: `19.94`
 
 ## License
