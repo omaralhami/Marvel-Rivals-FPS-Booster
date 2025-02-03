@@ -24,7 +24,7 @@ A lightweight tool to boost your Marvel Rivals performance with just one click.
 - Traditional executable (.exe)
 - ⚠️ May trigger Windows Defender/Chrome warnings
 - Requires manual approval in browser/antivirus
-- 📥 [Download Legacy Version](https://github.com/omaralhami/Marvel-Rivals-FPS-Booster/releases/tag/v1.0)
+- 📥 [Download Legacy Version](https://github.com/omaralhami/Marvel-Rivals-FPS-Booster/releases/tag/v1.0.0)
 
 ## How to Use
 
