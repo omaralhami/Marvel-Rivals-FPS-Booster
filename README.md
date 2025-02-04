@@ -2,6 +2,8 @@
 
 > A lightweight tool to boost your Marvel Rivals performance with just one click
 
+![image](https://github.com/user-attachments/assets/3eb7a932-7b2f-4baf-9b89-60e23c9f4977)
+
 ## 💡 What it Does
 
 The FPS Booster optimizes your game by:
